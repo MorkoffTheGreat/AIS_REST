@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище dbModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MyOrder">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Student_id" Type="int" Nullable="false" />
+          <Property Name="Stock_id" Type="int" Nullable="false" />
+          <Property Name="Stock_Price" Type="double" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Function" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Portfolio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Student_ID" Type="int" Nullable="false" />
+          <Property Name="Stocks_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Price" Type="double" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Student_ID" />
+          </Key>
+          <Property Name="Student_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Currency" Type="double" />
+          <Property Name="group_id" Type="int" Nullable="false" />
+          <Property Name="Fam" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Im" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Otch" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Passport" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="MyOrder_ibfk_1">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MyOrder" Type="Self.MyOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Stock_ID" />
+            </Principal>
+            <Dependent Role="MyOrder">
+              <PropertyRef Name="Stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MyOrder_ibfk_2">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MyOrder" Type="Self.MyOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Student_ID" />
+            </Principal>
+            <Dependent Role="MyOrder">
+              <PropertyRef Name="Student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Stud_id_fk">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Portfolio" Type="Self.Portfolio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Student_ID" />
+            </Principal>
+            <Dependent Role="Portfolio">
+              <PropertyRef Name="Student_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище dbModelContainer">
+          <EntitySet Name="MyOrder" EntityType="Self.MyOrder" Schema="project_db_lite" store:Type="Tables" />
+          <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="project_db_lite" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="project_db_lite" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="project_db_lite" store:Type="Tables" />
+          <AssociationSet Name="MyOrder_ibfk_1" Association="Self.MyOrder_ibfk_1">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="MyOrder" EntitySet="MyOrder" />
+          </AssociationSet>
+          <AssociationSet Name="MyOrder_ibfk_2" Association="Self.MyOrder_ibfk_2">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="MyOrder" EntitySet="MyOrder" />
+          </AssociationSet>
+          <AssociationSet Name="Stud_id_fk" Association="Self.Stud_id_fk">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Portfolio" EntitySet="Portfolio" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MyOrder">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Student_id" Type="Int32" Nullable="false" />
+          <Property Name="Stock_id" Type="Int32" Nullable="false" />
+          <Property Name="Stock_Price" Type="Double" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Function" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Stock" Relationship="Self.MyOrder_ibfk_1" FromRole="MyOrder" ToRole="Stock" />
+          <NavigationProperty Name="Student" Relationship="Self.MyOrder_ibfk_2" FromRole="MyOrder" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Portfolio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Student_ID" Type="Int32" Nullable="false" />
+          <Property Name="Stocks_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="Self.Stud_id_fk" FromRole="Portfolio" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MyOrder" Relationship="Self.MyOrder_ibfk_1" FromRole="Stock" ToRole="MyOrder" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Student_ID" />
+          </Key>
+          <Property Name="Student_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Currency" Type="Double" />
+          <Property Name="group_id" Type="Int32" Nullable="false" />
+          <Property Name="Fam" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Im" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Otch" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passport" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MyOrder" Relationship="Self.MyOrder_ibfk_2" FromRole="Student" ToRole="MyOrder" />
+          <NavigationProperty Name="Portfolio" Relationship="Self.Stud_id_fk" FromRole="Student" ToRole="Portfolio" />
+        </EntityType>
+        <Association Name="MyOrder_ibfk_1">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MyOrder" Type="Self.MyOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Stock_ID" />
+            </Principal>
+            <Dependent Role="MyOrder">
+              <PropertyRef Name="Stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MyOrder_ibfk_2">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MyOrder" Type="Self.MyOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Student_ID" />
+            </Principal>
+            <Dependent Role="MyOrder">
+              <PropertyRef Name="Student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Stud_id_fk">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Portfolio" Type="Self.Portfolio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Student_ID" />
+            </Principal>
+            <Dependent Role="Portfolio">
+              <PropertyRef Name="Student_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MyOrder" EntityType="Self.MyOrder" />
+          <EntitySet Name="Portfolio" EntityType="Self.Portfolio" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <AssociationSet Name="MyOrder_ibfk_1" Association="Self.MyOrder_ibfk_1">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="MyOrder" EntitySet="MyOrder" />
+          </AssociationSet>
+          <AssociationSet Name="MyOrder_ibfk_2" Association="Self.MyOrder_ibfk_2">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="MyOrder" EntitySet="MyOrder" />
+          </AssociationSet>
+          <AssociationSet Name="Stud_id_fk" Association="Self.Stud_id_fk">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Portfolio" EntitySet="Portfolio" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище dbModelContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="MyOrder">
+            <EntityTypeMapping TypeName="dbModel.MyOrder">
+              <MappingFragment StoreEntitySet="MyOrder">
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Student_id" ColumnName="Student_id" />
+                <ScalarProperty Name="Stock_id" ColumnName="Stock_id" />
+                <ScalarProperty Name="Stock_Price" ColumnName="Stock_Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Function" ColumnName="Function" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Portfolio">
+            <EntityTypeMapping TypeName="dbModel.Portfolio">
+              <MappingFragment StoreEntitySet="Portfolio">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Student_ID" ColumnName="Student_ID" />
+                <ScalarProperty Name="Stocks_ID" ColumnName="Stocks_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stock">
+            <EntityTypeMapping TypeName="dbModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="dbModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Student_ID" ColumnName="Student_ID" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="Fam" ColumnName="Fam" />
+                <ScalarProperty Name="Im" ColumnName="Im" />
+                <ScalarProperty Name="Otch" ColumnName="Otch" />
+                <ScalarProperty Name="Passport" ColumnName="Passport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
